@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row text-center">
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">
+                    Total submissions
+                </div>
+                <h1 class="card-text">30</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">
+                    Total customers
+                </div>
+                <h1 class="card-text">30</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">
+                    Last Entry
+                </div>
+                <h1 class="card-text">@DateTime.Now.ToShortDateString()</h1>
+            </div>
+        </div>
+    </div>
+</div>
