@@ -19,7 +19,7 @@ namespace isaloncoach10.Controllers
         }
 
         // GET: FormController
-        public async Task<ActionResult> Submit()
+        public async Task<ActionResult> Index()
         {
             return View();
         }
@@ -43,7 +43,7 @@ namespace isaloncoach10.Controllers
             var submitResult = await _formService.SubmitData(data);
             if (submitResult == true)
             {
-                return View();
+                return View("ThankYou");
             }
             else
             {
@@ -73,9 +73,10 @@ namespace isaloncoach10.Controllers
         }
 
         // GET: FormController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            return View();
+            await _formService.DeleteResponse(id);
+            return View("Index");
         }
 
         // POST: FormController/Delete/5
@@ -91,6 +92,12 @@ namespace isaloncoach10.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ThankYou()
+        {
+            return View();
         }
     }
 }

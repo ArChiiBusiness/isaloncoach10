@@ -15,23 +15,18 @@ namespace isaloncoach10.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private IFormService _formService;
+        private IStatisticsService _statisticsService;
 
-        public HomeController(ILogger<HomeController> logger, IFormService formService)
+        public HomeController(ILogger<HomeController> logger, IFormService formService, IStatisticsService statisticsService)
         {
             _formService = formService;
+            _statisticsService = statisticsService;
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Submissions()
-        {
-            List<FormDataBOL> data = await _formService.GetFormDataAll();
-            return View(data);
+            return View(await _statisticsService.GetStatistics());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

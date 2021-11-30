@@ -11,6 +11,8 @@ namespace BLL.Interfaces
     {
         Task<bool> SubmitData(FormDataBOL form);
         Task<List<FormDataBOL>> GetFormDataAll();
+        Task<bool> DeleteResponse(Guid id);
+        Task<FormDataBOL> GetFormData(Guid id);
     }
 
 }

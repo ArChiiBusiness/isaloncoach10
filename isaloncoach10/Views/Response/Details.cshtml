@@ -1,0 +1,102 @@
+﻿@model BOL.FormDataBOL;
+@{
+    ViewData["Title"] = "Response: " + Model.Id;
+}
+
+<div class="row">
+    <div class="col-12 p-2">
+        <div class="card shadow-sm p-3">
+            <div class="card-title">
+                <a href="~/response">To the response list</a>
+            </div>
+            <div class="card-body">
+                <dl>
+                    <dt>
+                        Timestamp
+                    </dt>
+                    <dd>
+                        @Model.Timestamp
+                    </dd>
+                    <dt>
+                        Salon Name
+                    </dt>
+                    <dd>
+                        @Model.SalonName
+                    </dd>
+                    <dt>
+                        Email
+                    </dt>
+                    <dd>
+                        @Model.Email
+                    </dd>
+                    <dt>
+                        Name
+                    </dt>
+                    <dd>
+                        @Model.Name
+                    </dd>
+                    <dt>
+                        Month
+                    </dt>
+                    <dd>
+                        @Model.Month
+                    </dd>
+                    <dt>
+                        Total Monthly Takings
+                    </dt>
+                    <dd>
+                        @Model.TotalMonthlyTakings
+                    </dd>
+                    <dt>
+                        Retail For The Month $
+                    </dt>
+                    <dd>
+                        @Model.RetailMonthUSD
+                    </dd>
+                    <dt>
+                        Wage Bill For The Month $
+                    </dt>
+                    <dd>
+                        @Model.WageBillMonthUSD
+                    </dd>
+                    <dt>
+                        Number of client visits In A Month
+                    </dt>
+                    <dd>
+                        @Model.ClientVisitsMonth
+                    </dd>
+                    <dt>
+                        Rebooks This Month %
+                    </dt>
+                    <dd>
+                        @Model.RebooksMonth%
+                    </dd>
+                    <dt>
+                        Total client visits (12 months) From Todays Date
+                    </dt>
+                    <dd>
+                        @Model.TotalClientVisitsYear
+                    </dd>
+                    <dt>
+                        Total individual clients (12 months) From Todays Date
+                    </dt>
+                    <dd>
+                        @Model.TotalIndividualClientVisitsYear
+                    </dd>
+                    <dt>
+                        Number New clients this month
+                    </dt>
+                    <dd>
+                        @Model.NewClientsMonth
+                    </dd>
+                    <dt>
+                        Total Clients In Database
+                    </dt>
+                    <dd>
+                        @Model.TotalClientsInDatabase
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

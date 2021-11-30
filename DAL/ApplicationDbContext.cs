@@ -13,6 +13,6 @@ namespace DAL
         {
         }
 
-        public DbSet<FormData> Submissions { get; set; }
+        public DbSet<FormData> Responses { get; set; }
     }
 }

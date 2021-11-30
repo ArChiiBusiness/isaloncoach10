@@ -1,15 +1,16 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@model BOL.StatisticsBOL;
 
 <div class="row text-center">
     <div class="col-4">
         <div class="card">
             <div class="card-body">
                 <div class="card-title">
-                    Total submissions
+                    Total responses
                 </div>
-                <h1 class="card-text">30</h1>
+                <h1 class="card-text">@Model.Responses</h1>
             </div>
         </div>
     </div>
@@ -19,7 +20,7 @@
                 <div class="card-title">
                     Total customers
                 </div>
-                <h1 class="card-text">30</h1>
+                <h1 class="card-text">@Model.Customers</h1>
             </div>
         </div>
     </div>
@@ -27,9 +28,9 @@
         <div class="card">
             <div class="card-body">
                 <div class="card-title">
-                    Last Entry
+                    Last Response
                 </div>
-                <h1 class="card-text">@DateTime.Now.ToShortDateString()</h1>
+                <h1 class="card-text">@Model.LastResponse.ToString()</h1>
             </div>
         </div>
     </div>

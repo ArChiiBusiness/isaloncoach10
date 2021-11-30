@@ -39,6 +39,7 @@ namespace isaloncoach10
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddTransient<IFormService, FormService>();
+            services.AddTransient<IStatisticsService, StatisticsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

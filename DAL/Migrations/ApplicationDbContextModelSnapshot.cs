@@ -19,7 +19,7 @@ namespace isaloncoach10.Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DAL.Submission", b =>
+            modelBuilder.Entity("DAL.FormData", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -78,7 +78,7 @@ namespace isaloncoach10.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Submissions");
+                    b.ToTable("Responses");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
