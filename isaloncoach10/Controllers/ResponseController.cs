@@ -28,7 +28,7 @@ namespace isaloncoach10.Controllers
 
         public async Task<IActionResult> Index()
         {
-            List<FormDataBOL> data = await _formService.GetFormDataAll();
+            List<ActualBOL> data = await _formService.GetFormDataAll();
             return View(data);
         }
 
@@ -52,7 +52,7 @@ namespace isaloncoach10.Controllers
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public async Task<IActionResult> Document(Guid id)
         {
-            FormDataBOL data = await _formService.GetFormData(id);
+            ActualBOL data = await _formService.GetFormData(id);
 
             Guid nId = Guid.NewGuid();
             string[] Months = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
@@ -70,21 +70,21 @@ namespace isaloncoach10.Controllers
             string docText = tmplText;
 
             docText = docText.Replace("{{salon_name}}", data.SalonName.ToString());
-            docText = docText.Replace("{{name}}", data.Name.ToString());
-            docText = docText.Replace("{{month}}", Months[int.Parse(data.Month)]);
+            //docText = docText.Replace("{{name}}", data.Name.ToString());
+            //docText = docText.Replace("{{month}}", Months[int.Parse(data.Month)]);
             docText = docText.Replace("{{year}}", data.Timestamp.Year.ToString());
 
-            docText = docText.Replace("{{tot_takings_t}}", data.TargetMonthUSD.ToString());
-            docText = docText.Replace("{{tot_takings_a}}", data.TotalMonthlyTakings.ToString());
-            docText = docText.Replace("{{tot_takings_r}}", $"{(Math.Round((data.TotalMonthlyTakings / data.TargetMonthUSD) * 100, 2)).ToString()}%");
+            //docText = docText.Replace("{{tot_takings_t}}", data.TargetMonthUSD.ToString());
+            //docText = docText.Replace("{{tot_takings_a}}", data.TotalMonthlyTakings.ToString());
+            //docText = docText.Replace("{{tot_takings_r}}", $"{(Math.Round((data.TotalMonthlyTakings / data.TargetMonthUSD) * 100, 2)).ToString()}%");
 
             docText = docText.Replace("{{retail_perc_t}}", "0");
             docText = docText.Replace("{{retail_perc_a}}", "0");
             docText = docText.Replace("{{retaild_perc_r}}", "0");
 
-            docText = docText.Replace("{{client_visits_t}}", data.TargetClientsMonth.ToString());
+            //docText = docText.Replace("{{client_visits_t}}", data.TargetClientsMonth.ToString());
             docText = docText.Replace("{{client_visits_a}}", data.ClientVisitsMonth.ToString());
-            docText = docText.Replace("{{client_visits_r}}", $"{(Math.Round((double.Parse(data.ClientVisitsMonth.ToString()) / double.Parse(data.TargetClientsMonth.ToString())) * 100, 2)).ToString()}%");
+            //docText = docText.Replace("{{client_visits_r}}", $"{(Math.Round((double.Parse(data.ClientVisitsMonth.ToString()) / double.Parse(data.TargetClientsMonth.ToString())) * 100, 2)).ToString()}%");
 
             docText = docText.Replace("{{new_clients_t}}", "0");
             docText = docText.Replace("{{new_clients_a}}", data.NewClientsMonth.ToString());
@@ -95,7 +95,7 @@ namespace isaloncoach10.Controllers
             docText = docText.Replace("{{avg_bill_r}}", "0");
 
             docText = docText.Replace("{{year_takings_t}}", "0");
-            docText = docText.Replace("{{year_takings_a}}", data.PastYearTotalTakings.ToString());
+            //docText = docText.Replace("{{year_takings_a}}", data.PastYearTotalTakings.ToString());
             docText = docText.Replace("{{year_takings_r}}", "0");
 
             docText = docText.Replace("{{wage_perc_t}}", "0");

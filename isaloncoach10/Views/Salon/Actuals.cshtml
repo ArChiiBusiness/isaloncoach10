@@ -1,0 +1,81 @@
+﻿@{
+    ViewData["Title"] = "View actuals";
+}
+@model List<BOL.ActualBOL>;
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card-style mb-30">
+            <h3>Salon: @ViewData["SalonName"]</h3>
+            <div class="table-wrapper table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Month</th>
+                            <th>Added</th>
+                            <th>Takings</th>
+                            <th>Clients in database</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var actual in Model)
+                        {
+                        <tr>
+                            <td class="min-width">
+                                <div class="lead">
+                                    <div class="lead-text">
+                                        <p>@actual.Year</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="lead">
+                                    <div class="lead-text">
+                                        <p>@actual.Month</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="lead">
+                                    <div class="lead-text">
+                                        <p>@actual.Timestamp.ToShortDateString() @actual.Timestamp.ToShortTimeString()</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="lead">
+                                    <div class="lead-text">
+                                        <p>@actual.TotalTakings</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="lead">
+                                    <div class="lead-text">
+                                        <p>@actual.TotalClientsInDatabase</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>
+                                        <a href="~/actual/@actual.Id/details" class="text-primary">
+                                            Details
+                                        </a>
+                                         | 
+                                        <a href="~/actual/@actual.Id/delete" class="text-primary">
+                                            Delete
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

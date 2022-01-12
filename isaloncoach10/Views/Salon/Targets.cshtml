@@ -1,0 +1,66 @@
+﻿@{
+    ViewData["Title"] = "View targets";
+}
+@model List<BOL.TargetBOL>;
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card-style mb-30">
+            <h3>Salon: @ViewData["SalonName"]</h3>
+            <a class="btn btn-primary mt-2" href="addtarget">Add Target</a>
+            <div class="table-wrapper table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Takings</th>
+                            <th>Clients in database</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var target in Model)
+                        {
+                            <tr>
+                                <td class="min-width">
+                                    <div class="lead">
+                                        <div class="lead-text">
+                                            <p>@target.Year</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="lead">
+                                        <div class="lead-text">
+                                            <p>@target.TotalTakings</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="lead">
+                                        <div class="lead-text">
+                                            <p>@target.TotalClientsInDatabase</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <div>
+                                            <a href="~/target/@target.Id/details" class="text-primary">
+                                                Details
+                                            </a>
+                                             |
+                                            <a href="~/target/@target.Id/delete" class="text-primary">
+                                                Delete
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

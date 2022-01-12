@@ -1,6 +1,7 @@
 ﻿using BLL.Interfaces;
 using BOL;
 using isaloncoach10.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace isaloncoach10.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

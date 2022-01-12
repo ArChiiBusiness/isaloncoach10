@@ -4,14 +4,16 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace isaloncoach10.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220110183212_update3")]
+    partial class update3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,61 +21,64 @@ namespace isaloncoach10.Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DAL.Actual", b =>
+            modelBuilder.Entity("DAL.Response", b =>
                 {
-                    b.Property<Guid>("ActualId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("ClientVisitsLastYear")
-                        .HasColumnType("float");
-
-                    b.Property<double>("ClientVisitsMonth")
-                        .HasColumnType("float");
-
-                    b.Property<double>("IndividualClientVisitsLastYear")
-                        .HasColumnType("float");
-
-                    b.Property<int>("Month")
+                    b.Property<int>("ClientVisitsMonth")
                         .HasColumnType("int");
 
-                    b.Property<double>("NewClientsMonth")
+                    b.Property<string>("Month")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NewClientsMonth")
+                        .HasColumnType("int");
+
+                    b.Property<double>("PastYearTotalTakings")
                         .HasColumnType("float");
 
                     b.Property<double>("RebooksMonth")
                         .HasColumnType("float");
 
-                    b.Property<double>("RetailMonth")
+                    b.Property<double>("RetailMonthUSD")
                         .HasColumnType("float");
 
                     b.Property<Guid>("SalonId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("TargetClientsMonth")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime2");
 
-                    b.Property<double>("TotalClientsInDatabase")
-                        .HasColumnType("float");
-
-                    b.Property<double>("TotalTakings")
-                        .HasColumnType("float");
-
-                    b.Property<double>("WageBillMonth")
-                        .HasColumnType("float");
-
-                    b.Property<int>("Year")
+                    b.Property<int>("TotalClientVisitsYear")
                         .HasColumnType("int");
 
-                    b.HasKey("ActualId");
+                    b.Property<int>("TotalClientsInDatabase")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalIndividualClientVisitsYear")
+                        .HasColumnType("int");
+
+                    b.Property<double>("TotalMonthlyTakings")
+                        .HasColumnType("float");
+
+                    b.Property<double>("WageBillMonthUSD")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("SalonId");
 
-                    b.ToTable("Actual");
+                    b.ToTable("Response");
                 });
 
             modelBuilder.Entity("DAL.Salon", b =>
                 {
-                    b.Property<Guid>("SalonId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -86,55 +91,12 @@ namespace isaloncoach10.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("SalonId");
+                    b.Property<double>("TargetMonthUSD")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Salon");
-                });
-
-            modelBuilder.Entity("DAL.Target", b =>
-                {
-                    b.Property<Guid>("TargetId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<double>("ClientVisitsLastYear")
-                        .HasColumnType("float");
-
-                    b.Property<double>("ClientVisitsMonth")
-                        .HasColumnType("float");
-
-                    b.Property<double>("IndividualClientVisitsLastYear")
-                        .HasColumnType("float");
-
-                    b.Property<double>("NewClientsMonth")
-                        .HasColumnType("float");
-
-                    b.Property<double>("RebooksMonth")
-                        .HasColumnType("float");
-
-                    b.Property<double>("RetailMonth")
-                        .HasColumnType("float");
-
-                    b.Property<Guid>("SalonId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<double>("TotalClientsInDatabase")
-                        .HasColumnType("float");
-
-                    b.Property<double>("TotalTakings")
-                        .HasColumnType("float");
-
-                    b.Property<double>("WageBillMonth")
-                        .HasColumnType("float");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("TargetId");
-
-                    b.HasIndex("SalonId");
-
-                    b.ToTable("Target");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -337,21 +299,10 @@ namespace isaloncoach10.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("DAL.Actual", b =>
+            modelBuilder.Entity("DAL.Response", b =>
                 {
                     b.HasOne("DAL.Salon", "Salon")
-                        .WithMany("Actuals")
-                        .HasForeignKey("SalonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Salon");
-                });
-
-            modelBuilder.Entity("DAL.Target", b =>
-                {
-                    b.HasOne("DAL.Salon", "Salon")
-                        .WithMany("Targets")
+                        .WithMany("Responses")
                         .HasForeignKey("SalonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -412,9 +363,7 @@ namespace isaloncoach10.Data.Migrations
 
             modelBuilder.Entity("DAL.Salon", b =>
                 {
-                    b.Navigation("Actuals");
-
-                    b.Navigation("Targets");
+                    b.Navigation("Responses");
                 });
 #pragma warning restore 612, 618
         }

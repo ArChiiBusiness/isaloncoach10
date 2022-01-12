@@ -12,94 +12,89 @@ namespace BLL.Services
     public class FormService : IFormService
     {
         public ApplicationDbContext _db;
+        private ISalonService _salonService;
 
-        public FormService(ApplicationDbContext db)
+        public FormService(ApplicationDbContext db, ISalonService salonService)
         {
             _db = db;
+            _salonService = salonService;
         }
 
         public async Task<bool> DeleteResponse(Guid id)
         {
-            _db.Responses.Remove(await _db.Responses.Where(r => r.Id == id).FirstAsync());
+            _db.Actual.Remove(await _db.Actual.Where(r => r.ActualId == id).FirstAsync());
             await _db.SaveChangesAsync();
             return true;
         }
 
-        public async Task<FormDataBOL> GetFormData(Guid id)
+        public async Task<ActualBOL> GetFormData(Guid id)
         {
-            return await _db.Responses.Where(f => f.Id == id)
-                .Select(data => new FormDataBOL
+            return await _db.Actual.Where(f => f.ActualId == id)
+                .Select(data => new ActualBOL
                 {
-                    Id = data.Id,
+                    Id = data.ActualId,
                     Timestamp = DateTime.Now,
-                    Name = data.Name,
-                    SalonName = data.SalonName,
-                    Email = data.Email,
-                    Month = data.Month,
-                    TotalMonthlyTakings = data.TotalMonthlyTakings,
-                    RetailMonthUSD = data.RetailMonthUSD,
-                    WageBillMonthUSD = data.WageBillMonthUSD,
                     ClientVisitsMonth = data.ClientVisitsMonth,
-                    TargetMonthUSD = data.TargetMonthUSD,
-                    TargetClientsMonth = data.TargetClientsMonth,
                     RebooksMonth = data.RebooksMonth,
-                    TotalClientVisitsYear = data.TotalClientVisitsYear,
-                    TotalIndividualClientVisitsYear = data.TotalIndividualClientVisitsYear,
                     NewClientsMonth = data.NewClientsMonth,
-                    PastYearTotalTakings = data.PastYearTotalTakings,
                     TotalClientsInDatabase = data.TotalClientsInDatabase
                 }).FirstOrDefaultAsync();
         }
 
-        public async Task<List<FormDataBOL>> GetFormDataAll()
+        public async Task<List<ActualBOL>> GetFormDataAll()
         {
-            return await _db.Responses.Select(data => new FormDataBOL
+            return await _db.Actual.Select(data => new ActualBOL
             {
-                Id = data.Id,
+                Id = data.ActualId,
                 Timestamp = DateTime.Now,
-                Name = data.Name,
-                SalonName = data.SalonName,
-                Email = data.Email,
-                Month = data.Month,
-                TotalMonthlyTakings = data.TotalMonthlyTakings,
-                RetailMonthUSD = data.RetailMonthUSD,
-                WageBillMonthUSD = data.WageBillMonthUSD,
                 ClientVisitsMonth = data.ClientVisitsMonth,
-                TargetMonthUSD = data.TargetMonthUSD,
-                TargetClientsMonth = data.TargetClientsMonth,
                 RebooksMonth = data.RebooksMonth,
-                TotalClientVisitsYear = data.TotalClientVisitsYear,
-                TotalIndividualClientVisitsYear = data.TotalIndividualClientVisitsYear,
                 NewClientsMonth = data.NewClientsMonth,
-                PastYearTotalTakings = data.PastYearTotalTakings,
                 TotalClientsInDatabase = data.TotalClientsInDatabase
             }).ToListAsync();
         }
 
-        public async Task<bool> SubmitData(FormDataBOL data)
+        public async Task<bool> SubmitActualData(ActualBOL data)
         {
-            FormData formData = new FormData
+            // Add salon if not exists
+            bool salonExists = await _salonService.SalonExists(data.SalonName);
+            Guid salonId = Guid.NewGuid();
+            if (salonExists)
             {
-                Id = data.Id,
-                Timestamp = DateTime.Now,
-                Name = data.Name,
-                SalonName = data.SalonName,
-                Email = data.Email,
+                salonId = await _salonService.GetSalonIdByName(data.SalonName);
+            }
+            else
+            {
+                Salon salon = new Salon
+                {
+                    SalonId = salonId,
+                    ContactName = data.ContactName,
+                    Email = data.Email,
+                    Name = data.SalonName
+                };
+                await _db.Salon.AddAsync(salon);
+                await _db.SaveChangesAsync();
+            }
+
+            // Add actual data
+            Actual actual = new Actual
+            {
+                ActualId = data.Id,
+                Timestamp = data.Timestamp,
                 Month = data.Month,
-                TotalMonthlyTakings = data.TotalMonthlyTakings,
-                RetailMonthUSD = data.RetailMonthUSD,
-                WageBillMonthUSD = data.WageBillMonthUSD,
+                Year = data.Year,
+                ClientVisitsLastYear = data.ClientVisitsLastYear,
                 ClientVisitsMonth = data.ClientVisitsMonth,
-                TargetMonthUSD = data.TargetMonthUSD,
-                TargetClientsMonth = data.TargetClientsMonth,
-                RebooksMonth = data.RebooksMonth,
-                TotalClientVisitsYear = data.TotalClientVisitsYear,
-                TotalIndividualClientVisitsYear = data.TotalIndividualClientVisitsYear,
+                IndividualClientVisitsLastYear = data.IndividualClientVisitsLastYear,
                 NewClientsMonth = data.NewClientsMonth,
-                PastYearTotalTakings = data.PastYearTotalTakings,
-                TotalClientsInDatabase = data.TotalClientsInDatabase
+                RebooksMonth = data.RebooksMonth,
+                RetailMonth = data.RetailMonth,
+                SalonId = salonId,
+                TotalClientsInDatabase = data.TotalClientsInDatabase,
+                TotalTakings = data.TotalTakings,
+                WageBillMonth = data.WageBillMonth
             };
-            await _db.Responses.AddAsync(formData);
+            await _db.Actual.AddAsync(actual);
             await _db.SaveChangesAsync();
             return true;
         }

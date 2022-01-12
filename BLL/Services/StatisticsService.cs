@@ -23,9 +23,9 @@ namespace BLL.Services
         {
             return new StatisticsBOL
             {
-                Responses = await _db.Responses.CountAsync(),
-                Customers = await _db.Responses.Select(c => c.Email).Distinct().CountAsync(),
-                LastResponse = await _db.Responses.OrderByDescending(d => d.Timestamp).Select(d => d.Timestamp).FirstOrDefaultAsync()
+                Actuals = await _db.Actual.CountAsync(),
+                Salons = await _db.Salon.CountAsync(),
+                LastResponse = await _db.Actual.OrderByDescending(d => d.Timestamp).Select(d => d.Timestamp).FirstOrDefaultAsync()
             };
         }
     }

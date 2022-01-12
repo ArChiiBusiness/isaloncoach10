@@ -9,10 +9,10 @@ namespace BLL.Interfaces
 {
     public interface IFormService
     {
-        Task<bool> SubmitData(FormDataBOL form);
-        Task<List<FormDataBOL>> GetFormDataAll();
+        Task<bool> SubmitActualData(ActualBOL form);
+        Task<List<ActualBOL>> GetFormDataAll();
         Task<bool> DeleteResponse(Guid id);
-        Task<FormDataBOL> GetFormData(Guid id);
+        Task<ActualBOL> GetFormData(Guid id);
     }
 
 }

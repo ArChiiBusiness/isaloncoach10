@@ -13,6 +13,8 @@ namespace DAL
         {
         }
 
-        public DbSet<FormData> Responses { get; set; }
+        public DbSet<Actual> Actual { get; set; }
+        public DbSet<Salon> Salon { get; set; }
+        public DbSet<Target> Target { get; set; }
     }
 }

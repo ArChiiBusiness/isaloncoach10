@@ -8,8 +8,8 @@ namespace BOL
 {
     public class StatisticsBOL
     {
-        public int Customers { get; set; } = 0;
-        public int Responses { get; set; } = 0;
+        public int Salons { get; set; } = 0;
+        public int Actuals { get; set; } = 0;
         public DateTime? LastResponse { get; set; }
     }
 }

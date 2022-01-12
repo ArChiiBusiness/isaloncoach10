@@ -1,16 +1,23 @@
 ﻿@model BOL.ActualBOL;
 @{
-    ViewData["Title"] = "Response: " + Model.Id;
+    ViewData["Title"] = "Actual Details";
 }
 
 <div class="row">
     <div class="col-12 p-2">
         <div class="card shadow-sm p-3">
             <div class="card-title">
-                <a href="~/response">To the response list</a>
+                <a href="~/salon/@Model.SalonId/actuals">To the actuals list</a><br />
+                <a class="btn btn-secondary mt-2 mb-2" href="~/actual/@Model.Id.ToString()/document"><i style="margin-right:5px;" class="lni lni-files"></i>Download document</a>
             </div>
             <div class="card-body">
                 <dl>
+                    <dt>
+                        Id
+                    </dt>
+                    <dd>
+                        @Model.Id
+                    </dd>
                     <dt>
                         Timestamp
                     </dt>
@@ -18,22 +25,10 @@
                         @Model.Timestamp
                     </dd>
                     <dt>
-                        Salon Name
+                        Year
                     </dt>
                     <dd>
-                        @Model.SalonName
-                    </dd>
-                    <dt>
-                        Email
-                    </dt>
-                    <dd>
-                        @Model.Email
-                    </dd>
-                    <dt>
-                        Name
-                    </dt>
-                    <dd>
-                        @*@Model.Name*@
+                        @Model.Year
                     </dd>
                     <dt>
                         Month
@@ -45,19 +40,19 @@
                         Total Monthly Takings
                     </dt>
                     <dd>
-                        @*@Model.TotalMonthlyTakings*@
+                        @Model.TotalTakings
                     </dd>
                     <dt>
                         Retail For The Month $
                     </dt>
                     <dd>
-                        @*@Model.RetailMonthUSD*@
+                        @Model.RetailMonth
                     </dd>
                     <dt>
                         Wage Bill For The Month $
                     </dt>
                     <dd>
-                        @*@Model.WageBillMonthUSD*@
+                        @Model.WageBillMonth
                     </dd>
                     <dt>
                         Number of client visits In A Month
@@ -75,13 +70,13 @@
                         Total client visits (12 months) From Todays Date
                     </dt>
                     <dd>
-                        @*@Model.TotalClientVisitsYear*@
+                        @Model.ClientVisitsLastYear
                     </dd>
                     <dt>
                         Total individual clients (12 months) From Todays Date
                     </dt>
                     <dd>
-                        @*@Model.TotalIndividualClientVisitsYear*@
+                        @Model.IndividualClientVisitsLastYear
                     </dd>
                     <dt>
                         Number New clients this month

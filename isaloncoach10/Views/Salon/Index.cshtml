@@ -1,0 +1,72 @@
+﻿@{
+    ViewData["Title"] = "View all salons";
+}
+@model List<BOL.SalonBOL>;
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card-style mb-30">
+            <div class="table-wrapper table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Contact Name</th>
+                            <th>Salon Name</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var salon in Model)
+                        {
+                            <tr>
+                                <td class="min-width">
+                                    <div class="lead">
+                                        <div class="lead-text">
+                                            <p>@salon.ContactName</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="lead">
+                                        <div class="lead-text">
+                                            <p>@salon.Name</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="lead">
+                                        <div class="lead-text">
+                                            <p>@salon.Email</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <div>
+                                            <a href="~/salon/@salon.Id.ToString()/actuals" class="text-primary">
+                                                Actuals
+                                            </a>
+                                             |
+                                            <a href="~/salon/@salon.Id.ToString()/targets" class="text-primary">
+                                                Targets
+                                            </a>
+                                             | 
+                                            <a href="~/salon/@salon.Id.ToString()/edit" class="text-primary">
+                                                Edit
+                                            </a>
+                                            |
+                                            <a href="~/salon/@salon.Id.ToString()/delete" class="text-danger">
+                                                Delete
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -12,10 +12,12 @@ namespace isaloncoach10.Controllers
     public class FormController : Controller
     {
         IFormService _formService;
+        private ISalonService _salonService;
 
-        public FormController(IFormService formService)
+        public FormController(IFormService formService, ISalonService salonService)
         {
             _formService = formService;
+            _salonService = salonService;
         }
 
         // GET: FormController
@@ -38,24 +40,32 @@ namespace isaloncoach10.Controllers
 
         // POST: FormController/Create
         [HttpPost]
-        public async Task<ActionResult> Submit(FormDataBOL data)
+        public async Task<IActionResult> Submit(ActualBOL data)
         {
-            var submitResult = await _formService.SubmitData(data);
-            if (submitResult == true)
+
+            // Add salon if not exists
+            bool salonExists = await _salonService.SalonExists(data.SalonName);
+            Guid salonId = Guid.NewGuid();
+
+            if (salonExists)
             {
-                return View("ThankYou");
+                salonId = await _salonService.GetSalonIdByName(data.SalonName);
             }
             else
             {
-                return BadRequest();
+                SalonBOL salon = new SalonBOL
+                {
+                    Name = data.SalonName,
+                    ContactName = data.ContactName,
+                    Email = data.Email
+                };
+                salonId = await _salonService.AddSalon(salon);
             }
+
+            Guid actualId = await _salonService.AddActualData(data, salonId);
+            return RedirectToAction("ThankYou");
         }
 
-        // GET: FormController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
 
         // POST: FormController/Edit/5
         [HttpPost]
