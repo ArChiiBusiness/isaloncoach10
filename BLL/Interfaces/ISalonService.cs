@@ -10,11 +10,11 @@ namespace BLL.Interfaces
     public interface ISalonService
     {
         Task<List<SalonBOL>> GetAll();
+        Task<Guid> AddSalon(SalonBOL salon);
         Task<bool> SalonExists(string salonName);
         Task<SalonBOL> GetSalonByName(string salonName);
         Task<Guid> GetSalonIdByName(string salonName);
         Task<string> GetSalonNameById(Guid salonId);
-        Task<Guid> AddSalon(SalonBOL salon);
         Task<bool> DeleteSalon(Guid salonId);
 
         // Actuals

@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Add Salon";
+}
+
+<div class="row">
+    <div class="col-12 p-2">
+        <div class="card shadow-sm p-3">
+            <div class="card-title">
+                <a href="index">To the salon list</a>
+            </div>
+            <form action="addsalon" method="post">
+                <div class="card shadow-sm p-2 mt-2">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <label for="Name" class="col-form-label"><b>Salon Name</b></label>
+                            <input type="text" name="Name" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm p-2 mt-2">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <label for="ContactName" class="col-form-label"><b>Contact Name</b></label>
+                            <input type="text" name="ContactName" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm p-2 mt-2">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <label for="Email" class="col-form-label"><b>Email</b></label>
+                            <input type="text" name="Email" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

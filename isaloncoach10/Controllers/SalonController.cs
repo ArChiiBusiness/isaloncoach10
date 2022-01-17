@@ -29,6 +29,19 @@ namespace isaloncoach10.Controllers
             return View(await _salonService.GetAll());
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Add()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddSalon(SalonBOL salon)
+        {
+            Guid salonId = await _salonService.AddSalon(salon);
+            return RedirectToAction("index");
+        }
+
         [Route("/salon/{salonId}/delete")]
         public async Task<IActionResult> Delete(Guid salonId)
         {
