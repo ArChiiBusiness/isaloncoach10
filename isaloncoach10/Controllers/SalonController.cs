@@ -176,17 +176,17 @@ namespace isaloncoach10.Controllers
             }
 
             // Result
-            if (previousActual != null)
+            if (target != null)
             {
-                docText = docText.Replace("{{tot_takings_r}}", $"{Math.Round(((actual.TotalTakings - previousActual.TotalTakings) / Math.Abs(previousActual.TotalTakings)) * 100, 2)}%");
-                docText = docText.Replace("{{retail_r}}", $"{Math.Round(((actual.RetailMonth - previousActual.RetailMonth) / Math.Abs(previousActual.RetailMonth)) * 100, 2)}%");
-                docText = docText.Replace("{{wage_bill_r}}", $"{Math.Round(((actual.WageBillMonth - previousActual.WageBillMonth) / Math.Abs(previousActual.WageBillMonth)) * 100, 2)}%");
-                docText = docText.Replace("{{client_visits_r}}", $"{Math.Round(((actual.NewClientsMonth - previousActual.NewClientsMonth) / Math.Abs(previousActual.NewClientsMonth)) * 100, 2)}%");
-                docText = docText.Replace("{{rebooks_r}}", $"{Math.Round(((actual.RebooksMonth - previousActual.RebooksMonth) / Math.Abs(previousActual.RebooksMonth)) * 100, 2)}%");
-                docText = docText.Replace("{{client_visits_year_r}}", $"{Math.Round(((actual.ClientVisitsLastYear - previousActual.ClientVisitsLastYear) / Math.Abs(previousActual.ClientVisitsLastYear)) * 100, 2)}%");
-                docText = docText.Replace("{{individual_clients_year_r}}", $"{Math.Round(((actual.IndividualClientVisitsLastYear - previousActual.IndividualClientVisitsLastYear) / Math.Abs(previousActual.IndividualClientVisitsLastYear)) * 100, 2)}%");
-                docText = docText.Replace("{{new_clients_r}}", $"{Math.Round(((actual.NewClientsMonth - previousActual.NewClientsMonth) / Math.Abs(previousActual.NewClientsMonth)) * 100, 2)}%");
-                docText = docText.Replace("{{clients_in_db_r}}", $"{Math.Round(((actual.TotalClientsInDatabase - previousActual.TotalClientsInDatabase) / Math.Abs(previousActual.TotalClientsInDatabase)) * 100, 2)}%");
+                docText = docText.Replace("{{tot_takings_r}}", $"{Math.Round(actual.TotalTakings / target.TotalTakings * 100, 2)}%");
+                docText = docText.Replace("{{retail_r}}", $"{Math.Round(actual.RetailMonth / target.RetailMonth * 100, 2)}%");
+                docText = docText.Replace("{{wage_bill_r}}", $"{Math.Round(actual.WageBillMonth / target.WageBillMonth * 100, 2)}%");
+                docText = docText.Replace("{{client_visits_r}}", $"{Math.Round(actual.NewClientsMonth / target.NewClientsMonth * 100, 2)}%");
+                docText = docText.Replace("{{rebooks_r}}", $"{Math.Round(actual.RebooksMonth / target.RebooksMonth * 100, 2)}%");
+                docText = docText.Replace("{{client_visits_year_r}}", $"{Math.Round(actual.ClientVisitsLastYear / target.ClientVisitsLastYear * 100, 2)}%");
+                docText = docText.Replace("{{individual_clients_year_r}}", $"{Math.Round(actual.IndividualClientVisitsLastYear / target.IndividualClientVisitsLastYear * 100, 2)}%");
+                docText = docText.Replace("{{new_clients_r}}", $"{Math.Round(actual.NewClientsMonth / target.NewClientsMonth * 100, 2)}%");
+                docText = docText.Replace("{{clients_in_db_r}}", $"{Math.Round(actual.TotalClientsInDatabase / target.TotalClientsInDatabase * 100, 2)}%");
             }
             else
             {
