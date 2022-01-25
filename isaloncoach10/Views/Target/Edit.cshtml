@@ -1,0 +1,114 @@
+﻿@{
+    ViewData["Title"] = "Edit Target";
+}
+@model BOL.TargetBOL;
+
+<div class="row">
+    <div class="col-12 p-2">
+        <div class="card shadow-sm p-3">
+            <div class="card-title">
+                <a href="targets">To the target list</a>
+            </div>
+            <form action="edit" method="post">
+                <div class="card shadow-sm p-2 mt-2">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <label for="Year" class="col-form-label"><b>Year</b></label>
+                            <input type="number" name="Year" class="form-control" value="@Model.Year">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm p-2 mt-2">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <label for="TotalTakings" class="col-form-label"><b>Total Monthly Takings</b></label>
+                            <input type="number" name="TotalTakings" class="form-control" value="@Model.TotalTakings">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm p-2 mt-2">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <label for="RetailMonth" class="col-form-label"><b>Retail For The Month $</b></label>
+                            <input type="number" name="RetailMonth" class="form-control" value="@Model.RetailMonth">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm p-2 mt-2">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <label for="WageBillMonth" class="col-form-label"><b>Wage Bill For The Month $</b></label>
+                            <input type="number" name="WageBillMonth" class="form-control" value="@Model.WageBillMonth">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm p-2 mt-2">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <label for="ClientVisits" class="col-form-label"><b>Number of client visits In A Month</b></label>
+                            <input type="number" name="ClientVisitsMonth" class="form-control" value="@Model.ClientVisitsMonth">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm p-2 mt-2">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <label for="RebooksMonth" class="col-form-label"><b>Rebooks this Month, %</b></label>
+                            <input type="number" name="RebooksMonth" class="form-control" value="@Model.RebooksMonth">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm p-2 mt-2">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <label for="ClientVisitsLastYear" class="col-form-label"><b>Total client visits (12 months) From Todays Date</b></label>
+                            <input type="number" name="ClientVisitsLastYear" class="form-control" value="@Model.ClientVisitsLastYear">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm p-2 mt-2">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <label for="IndividualClientVisitsLastYear" class="col-form-label"><b>Total individual clients (12 months) From Todays Date</b></label>
+                            <input type="number" name="IndividualClientVisitsLastYear" class="form-control" value="@Model.IndividualClientVisitsLastYear">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm p-2 mt-2">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <label for="NewClientsMonth" class="col-form-label"><b>Number New clients this month</b></label>
+                            <input type="number" name="NewClientsMonth" class="form-control" value="@Model.NewClientsMonth">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm p-2 mt-2">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <label for="TotalClientsInDatabase" class="col-form-label"><b>Total Clients In Database</b></label>
+                            <input type="number" name="TotalClientsInDatabase" class="form-control" value="@Model.TotalClientsInDatabase">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm p-2 mt-2 mb-2">
+                    <div class="card-body">
+                        <div>
+                            <button type="submit" class="btn btn-primary mt-3 w-100">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

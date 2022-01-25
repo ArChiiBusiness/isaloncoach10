@@ -82,6 +82,19 @@ namespace BLL.Services
             return true;
         }
 
+        public async Task<SalonBOL> GetSalonById(Guid salonId)
+        {
+            return await _db.Salon.Where(s => s.SalonId == salonId)
+                 .Select(s => new SalonBOL
+                 {
+                     Id = s.SalonId,
+                     Name = s.Name,
+                     ContactName = s.ContactName,
+                     Email = s.Email
+                 }).FirstOrDefaultAsync();
+        }
+
+
         // Actuals
         public async Task<Guid> AddActualData(ActualBOL actual, Guid salonId)
         {
@@ -305,6 +318,35 @@ namespace BLL.Services
                         Year = target.Year
                     }).FirstOrDefaultAsync();
             }
+        }
+
+        public async Task<bool> UpdateSalon(SalonBOL salon)
+        {
+            Salon salonDAL = await _db.Salon.Where(s => s.SalonId == salon.Id).FirstOrDefaultAsync();
+            salonDAL.Name = salon.Name;
+            salonDAL.ContactName = salon.ContactName;
+            salonDAL.Email = salon.Email;
+            _db.Salon.Update(salonDAL);
+            await _db.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> UpdateTarget(TargetBOL target)
+        {
+            Target targetDAL = await _db.Target.Where(t => t.TargetId == target.Id).FirstOrDefaultAsync();
+            targetDAL.Year = target.Year;
+            targetDAL.WageBillMonth = target.WageBillMonth;
+            targetDAL.TotalTakings = target.TotalTakings;
+            targetDAL.TotalClientsInDatabase = target.TotalClientsInDatabase;
+            targetDAL.RetailMonth = target.RetailMonth;
+            targetDAL.RebooksMonth = target.RebooksMonth;
+            targetDAL.NewClientsMonth = target.NewClientsMonth;
+            targetDAL.IndividualClientVisitsLastYear = target.IndividualClientVisitsLastYear;
+            targetDAL.ClientVisitsMonth = target.ClientVisitsMonth;
+            targetDAL.ClientVisitsLastYear = target.ClientVisitsLastYear;
+            _db.Target.Update(targetDAL);
+            await _db.SaveChangesAsync();
+            return true;
         }
     }
 }

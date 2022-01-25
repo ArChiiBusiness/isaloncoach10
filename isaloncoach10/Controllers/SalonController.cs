@@ -30,6 +30,7 @@ namespace isaloncoach10.Controllers
         }
 
         [HttpGet]
+        [Route("/salon/add")]
         public async Task<IActionResult> Add()
         {
             return View();
@@ -39,6 +40,22 @@ namespace isaloncoach10.Controllers
         public async Task<IActionResult> AddSalon(SalonBOL salon)
         {
             Guid salonId = await _salonService.AddSalon(salon);
+            return RedirectToAction("index");
+        }
+
+        [HttpGet]
+        [Route("/salon/{salonId}/edit")]
+        public async Task<IActionResult> Edit(Guid salonId)
+        {
+            return View(await _salonService.GetSalonById(salonId));
+        }
+
+        [HttpPost]
+        [Route("/salon/{salonId}/edit")]
+        public async Task<IActionResult> EditSalon([FromForm] SalonBOL salon, [FromRoute] Guid salonId)
+        {
+            salon.Id = salonId;
+            bool updateResult = await _salonService.UpdateSalon(salon);
             return RedirectToAction("index");
         }
 
@@ -91,6 +108,23 @@ namespace isaloncoach10.Controllers
         {
             await _salonService.AddTargetData(target, Guid.Parse(RouteData.Values["salonId"].ToString()));
             return RedirectToAction("Targets", new { salonId = RouteData.Values["salonId"] });
+        }
+
+        [HttpGet]
+        [Route("/target/{targetId}/edit")]
+        public async Task<IActionResult> EditTarget(Guid targetId)
+        {
+            return View("../target/edit", await _salonService.GetTargetById(targetId));
+        }
+
+        [HttpPost]
+        [Route("/target/{targetId}/edit")]
+        public async Task<IActionResult> EditTarget([FromForm] TargetBOL target, [FromRoute] Guid targetId)
+        {
+            target.Id = targetId;
+            await _salonService.UpdateTarget(target);
+            Guid salonId = (await _salonService.GetTargetById(targetId)).SalonId;
+            return RedirectToAction("Targets", new { salonId = salonId });
         }
 
         [Route("/target/{targetId}/delete")]
