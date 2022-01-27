@@ -19,6 +19,12 @@ namespace DAL
         public double IndividualClientVisitsLastYear { get; set; }
         public double NewClientsMonth { get; set; }
         public double TotalClientsInDatabase { get; set; }
+        public double WagePercent { get; set; }
+        public double RetailPercent { get; set; }
+        public double AverageBill { get; set; }
+        public double TotalYearTarget { get; set; }
+        public double AverageClientVisitsYear { get; set; }
+        public double WeeksBetweenAppointments { get; set; }
 
         public Guid SalonId { get; set; }
         public Salon Salon { get; set; }

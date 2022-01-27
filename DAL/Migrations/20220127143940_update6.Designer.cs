@@ -4,14 +4,16 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace isaloncoach10.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220127143940_update6")]
+    partial class update6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,12 +99,6 @@ namespace isaloncoach10.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("AverageBill")
-                        .HasColumnType("float");
-
-                    b.Property<double>("AverageClientVisitsYear")
-                        .HasColumnType("float");
-
                     b.Property<double>("ClientVisitsLastYear")
                         .HasColumnType("float");
 
@@ -121,9 +117,6 @@ namespace isaloncoach10.Data.Migrations
                     b.Property<double>("RetailMonth")
                         .HasColumnType("float");
 
-                    b.Property<double>("RetailPercent")
-                        .HasColumnType("float");
-
                     b.Property<Guid>("SalonId")
                         .HasColumnType("uniqueidentifier");
 
@@ -133,16 +126,10 @@ namespace isaloncoach10.Data.Migrations
                     b.Property<double>("TotalTakings")
                         .HasColumnType("float");
 
-                    b.Property<double>("TotalYearTarget")
-                        .HasColumnType("float");
-
                     b.Property<double>("WageBillMonth")
                         .HasColumnType("float");
 
                     b.Property<double>("WagePercent")
-                        .HasColumnType("float");
-
-                    b.Property<double>("WeeksBetweenAppointments")
                         .HasColumnType("float");
 
                     b.Property<int>("Year")

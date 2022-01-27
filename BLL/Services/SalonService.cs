@@ -93,7 +93,16 @@ namespace BLL.Services
                      Email = s.Email
                  }).FirstOrDefaultAsync();
         }
-
+        public async Task<bool> UpdateSalon(SalonBOL salon)
+        {
+            Salon salonDAL = await _db.Salon.Where(s => s.SalonId == salon.Id).FirstOrDefaultAsync();
+            salonDAL.Name = salon.Name;
+            salonDAL.ContactName = salon.ContactName;
+            salonDAL.Email = salon.Email;
+            _db.Salon.Update(salonDAL);
+            await _db.SaveChangesAsync();
+            return true;
+        }
 
         // Actuals
         public async Task<Guid> AddActualData(ActualBOL actual, Guid salonId)
@@ -180,79 +189,6 @@ namespace BLL.Services
             return true;
         }
 
-        //Target
-        public async Task<Guid> AddTargetData(TargetBOL target, Guid salonId)
-        {
-            Target targetDAL = new Target
-            {
-                ClientVisitsLastYear = target.ClientVisitsLastYear,
-                ClientVisitsMonth = target.ClientVisitsMonth,
-                IndividualClientVisitsLastYear = target.IndividualClientVisitsLastYear,
-                NewClientsMonth = target.NewClientsMonth,
-                RebooksMonth = target.RebooksMonth,
-                RetailMonth = target.RetailMonth,
-                SalonId = salonId,
-                TargetId = target.Id,
-                TotalClientsInDatabase = target.TotalClientsInDatabase,
-                TotalTakings = target.TotalTakings,
-                WageBillMonth = target.WageBillMonth,
-                Year = target.Year
-            };
-            await _db.Target.AddAsync(targetDAL);
-            await _db.SaveChangesAsync();
-            return targetDAL.TargetId;
-        }
-
-        public async Task<List<TargetBOL>> GetTargets(Guid salonId)
-        {
-            return await _db.Target.Where(a => a.SalonId == salonId)
-                .OrderByDescending(a => a.Year)
-                .Select(target => new TargetBOL
-                {
-                    Id = target.TargetId,
-                    SalonId = salonId,
-                    ClientVisitsLastYear = target.ClientVisitsLastYear,
-                    ClientVisitsMonth = target.ClientVisitsMonth,
-                    IndividualClientVisitsLastYear = target.IndividualClientVisitsLastYear,
-                    NewClientsMonth = target.NewClientsMonth,
-                    RebooksMonth = target.RebooksMonth,
-                    RetailMonth = target.RetailMonth,
-                    SalonName = target.Salon.Name,
-                    TotalClientsInDatabase = target.TotalClientsInDatabase,
-                    TotalTakings = target.TotalTakings,
-                    WageBillMonth = target.WageBillMonth,
-                    Year = target.Year
-                }).ToListAsync();
-        }
-
-        public async Task<TargetBOL> GetTargetById(Guid targetId)
-        {
-            return await _db.Target.Where(a => a.TargetId == targetId)
-                .Select(target => new TargetBOL
-                {
-                    Id = target.TargetId,
-                    SalonId = target.SalonId,
-                    ClientVisitsLastYear = target.ClientVisitsLastYear,
-                    ClientVisitsMonth = target.ClientVisitsMonth,
-                    IndividualClientVisitsLastYear = target.IndividualClientVisitsLastYear,
-                    NewClientsMonth = target.NewClientsMonth,
-                    RebooksMonth = target.RebooksMonth,
-                    RetailMonth = target.RetailMonth,
-                    SalonName = target.Salon.Name,
-                    TotalClientsInDatabase = target.TotalClientsInDatabase,
-                    TotalTakings = target.TotalTakings,
-                    WageBillMonth = target.WageBillMonth,
-                    Year = target.Year
-                }).FirstOrDefaultAsync();
-        }
-
-        public async Task<bool> DeleteTarget(Guid targetId)
-        {
-            _db.Target.Remove(await _db.Target.Where(t => t.TargetId == targetId).FirstOrDefaultAsync());
-            await _db.SaveChangesAsync();
-            return true;
-        }
-
         public async Task<ActualBOL> GetActualByMonthYear(Guid salonId, int Year, int Month)
         {
             bool actualExists = await _db.Actual
@@ -289,6 +225,99 @@ namespace BLL.Services
 
         }
 
+        //Target
+        public async Task<Guid> AddTargetData(TargetBOL target, Guid salonId)
+        {
+            target.AverageClientVisitsYear = Math.Round(target.ClientVisitsLastYear / target.IndividualClientVisitsLastYear, 2);
+            target.WeeksBetweenAppointments = Math.Round(52 / target.AverageClientVisitsYear, 2);
+            Target targetDAL = new Target
+            {
+                ClientVisitsLastYear = target.ClientVisitsLastYear,
+                ClientVisitsMonth = target.ClientVisitsMonth,
+                IndividualClientVisitsLastYear = target.IndividualClientVisitsLastYear,
+                NewClientsMonth = target.NewClientsMonth,
+                RebooksMonth = target.RebooksMonth,
+                RetailMonth = target.RetailMonth,
+                SalonId = salonId,
+                TargetId = target.Id,
+                TotalClientsInDatabase = target.TotalClientsInDatabase,
+                TotalTakings = target.TotalTakings,
+                WageBillMonth = target.WageBillMonth,
+                Year = target.Year,
+                AverageBill = target.AverageBill,
+                AverageClientVisitsYear = target.AverageClientVisitsYear,
+                RetailPercent = target.RetailPercent,
+                TotalYearTarget = target.TotalYearTarget,
+                WagePercent = target.WagePercent,
+                WeeksBetweenAppointments = target.WeeksBetweenAppointments
+            };
+            await _db.Target.AddAsync(targetDAL);
+            await _db.SaveChangesAsync();
+            return targetDAL.TargetId;
+        }
+
+        public async Task<List<TargetBOL>> GetTargets(Guid salonId)
+        {
+            return await _db.Target.Where(a => a.SalonId == salonId)
+                .OrderByDescending(a => a.Year)
+                .Select(target => new TargetBOL
+                {
+                    Id = target.TargetId,
+                    SalonId = salonId,
+                    ClientVisitsLastYear = target.ClientVisitsLastYear,
+                    ClientVisitsMonth = target.ClientVisitsMonth,
+                    IndividualClientVisitsLastYear = target.IndividualClientVisitsLastYear,
+                    NewClientsMonth = target.NewClientsMonth,
+                    RebooksMonth = target.RebooksMonth,
+                    RetailMonth = target.RetailMonth,
+                    SalonName = target.Salon.Name,
+                    TotalClientsInDatabase = target.TotalClientsInDatabase,
+                    TotalTakings = target.TotalTakings,
+                    WageBillMonth = target.WageBillMonth,
+                    Year = target.Year,
+                    WeeksBetweenAppointments = target.WeeksBetweenAppointments,
+                    AverageBill = target.AverageBill,
+                    AverageClientVisitsYear = target.AverageClientVisitsYear,
+                    RetailPercent = target.RetailPercent,
+                    TotalYearTarget = target.TotalYearTarget,
+                    WagePercent = target.WagePercent
+                }).ToListAsync();
+        }
+
+        public async Task<TargetBOL> GetTargetById(Guid targetId)
+        {
+            return await _db.Target.Where(a => a.TargetId == targetId)
+                .Select(target => new TargetBOL
+                {
+                    Id = target.TargetId,
+                    SalonId = target.SalonId,
+                    ClientVisitsLastYear = target.ClientVisitsLastYear,
+                    ClientVisitsMonth = target.ClientVisitsMonth,
+                    IndividualClientVisitsLastYear = target.IndividualClientVisitsLastYear,
+                    NewClientsMonth = target.NewClientsMonth,
+                    RebooksMonth = target.RebooksMonth,
+                    RetailMonth = target.RetailMonth,
+                    SalonName = target.Salon.Name,
+                    TotalClientsInDatabase = target.TotalClientsInDatabase,
+                    TotalTakings = target.TotalTakings,
+                    WageBillMonth = target.WageBillMonth,
+                    Year = target.Year,
+                    WeeksBetweenAppointments = target.WeeksBetweenAppointments,
+                    AverageBill = target.AverageBill,
+                    AverageClientVisitsYear = target.AverageClientVisitsYear,
+                    RetailPercent = target.RetailPercent,
+                    TotalYearTarget = target.TotalYearTarget,
+                    WagePercent = target.WagePercent
+                }).FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> DeleteTarget(Guid targetId)
+        {
+            _db.Target.Remove(await _db.Target.Where(t => t.TargetId == targetId).FirstOrDefaultAsync());
+            await _db.SaveChangesAsync();
+            return true;
+        }
+
         public async Task<TargetBOL> GetTargetByYear(Guid salonId, int Year)
         {
             bool targetExists = await _db.Target
@@ -315,24 +344,22 @@ namespace BLL.Services
                         TotalClientsInDatabase = target.TotalClientsInDatabase,
                         TotalTakings = target.TotalTakings,
                         WageBillMonth = target.WageBillMonth,
-                        Year = target.Year
+                        Year = target.Year,
+                        WeeksBetweenAppointments = target.WeeksBetweenAppointments,
+                        AverageBill = target.AverageBill,
+                        AverageClientVisitsYear = target.AverageClientVisitsYear,
+                        RetailPercent = target.RetailPercent,
+                        TotalYearTarget = target.TotalYearTarget,
+                        WagePercent = target.WagePercent
                     }).FirstOrDefaultAsync();
             }
         }
 
-        public async Task<bool> UpdateSalon(SalonBOL salon)
-        {
-            Salon salonDAL = await _db.Salon.Where(s => s.SalonId == salon.Id).FirstOrDefaultAsync();
-            salonDAL.Name = salon.Name;
-            salonDAL.ContactName = salon.ContactName;
-            salonDAL.Email = salon.Email;
-            _db.Salon.Update(salonDAL);
-            await _db.SaveChangesAsync();
-            return true;
-        }
-
         public async Task<bool> UpdateTarget(TargetBOL target)
         {
+            target.AverageClientVisitsYear = Math.Round(target.ClientVisitsLastYear / target.IndividualClientVisitsLastYear, 2);
+            target.WeeksBetweenAppointments = Math.Round(52 / target.AverageClientVisitsYear, 2);
+
             Target targetDAL = await _db.Target.Where(t => t.TargetId == target.Id).FirstOrDefaultAsync();
             targetDAL.Year = target.Year;
             targetDAL.WageBillMonth = target.WageBillMonth;
@@ -344,6 +371,12 @@ namespace BLL.Services
             targetDAL.IndividualClientVisitsLastYear = target.IndividualClientVisitsLastYear;
             targetDAL.ClientVisitsMonth = target.ClientVisitsMonth;
             targetDAL.ClientVisitsLastYear = target.ClientVisitsLastYear;
+            targetDAL.WeeksBetweenAppointments = target.WeeksBetweenAppointments;
+            targetDAL.WagePercent = target.WagePercent;
+            targetDAL.TotalYearTarget = target.TotalYearTarget;
+            targetDAL.AverageClientVisitsYear = target.AverageClientVisitsYear;
+            targetDAL.AverageBill = target.AverageBill;
+            targetDAL.RetailPercent = target.RetailPercent;
             _db.Target.Update(targetDAL);
             await _db.SaveChangesAsync();
             return true;
