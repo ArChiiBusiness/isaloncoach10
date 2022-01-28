@@ -28,7 +28,7 @@ namespace BOL
         public double WagePercent { get; set; }
         public double RetailPercent { get; set; }
         public double AverageBill { get; set; }
-        public double TotalYearTarget { get; set; }
+        public double TotalTakingsYear { get; set; }
         public double AverageClientVisitsYear { get; set; }
         public double WeeksBetweenAppointments { get; set; }
     }

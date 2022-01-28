@@ -15,6 +15,7 @@ namespace DAL
         public double TotalTakings { get; set; }
         public double RetailMonth { get; set; }
         public double WageBillMonth { get; set; }
+        public double AverageBill { get; set; }
         public double ClientVisitsMonth { get; set; }
         public double RebooksMonth { get; set; }
         public double ClientVisitsLastYear { get; set; }
