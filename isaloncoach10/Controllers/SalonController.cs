@@ -181,7 +181,12 @@ namespace isaloncoach10.Controllers
             docText = docText.Replace("{{client_visits_year_a}}", actual.ClientVisitsLastYear.ToString());
             docText = docText.Replace("{{individual_clients_year_a}}", actual.IndividualClientVisitsLastYear.ToString());
             docText = docText.Replace("{{new_clients_a}}", actual.NewClientsMonth.ToString());
-            docText = docText.Replace("{{clients_in_db_a}}", actual.TotalClientsInDatabase.ToString());
+            docText = docText.Replace("{{wage_percent_a}}", actual.WagePercent.ToString());
+            docText = docText.Replace("{{retail_percent_a}}", actual.RetailPercent.ToString());
+            docText = docText.Replace("{{average_bill_a}}", actual.AverageBill.ToString());
+            docText = docText.Replace("{{total_year_takings_a}}", actual.TotalTakingsYear.ToString());
+            docText = docText.Replace("{{avg_client_visits_a}}", actual.AverageClientVisitsYear.ToString());
+            docText = docText.Replace("{{wks_between_apts_a}}", actual.WeeksBetweenAppointments.ToString());
 
             // Targets
             if (target != null)
@@ -194,7 +199,12 @@ namespace isaloncoach10.Controllers
                 docText = docText.Replace("{{client_visits_year_t}}", target.ClientVisitsLastYear.ToString());
                 docText = docText.Replace("{{individual_clients_year_t}}", target.IndividualClientVisitsLastYear.ToString());
                 docText = docText.Replace("{{new_clients_t}}", target.NewClientsMonth.ToString());
-                docText = docText.Replace("{{clients_in_db_t}}", target.TotalClientsInDatabase.ToString());
+                docText = docText.Replace("{{wage_percent_t}}", target.WagePercent.ToString());
+                docText = docText.Replace("{{retail_percent_t}}", target.RetailPercent.ToString());
+                docText = docText.Replace("{{average_bill_t}}", target.AverageBill.ToString());
+                docText = docText.Replace("{{total_year_takings_t}}", target.TotalYearTarget.ToString());
+                docText = docText.Replace("{{avg_client_visits_t}}", target.AverageClientVisitsYear.ToString());
+                docText = docText.Replace("{{wks_between_apts_t}}", target.WeeksBetweenAppointments.ToString());
             }
             else
             {
@@ -206,21 +216,31 @@ namespace isaloncoach10.Controllers
                 docText = docText.Replace("{{client_visits_year_t}}", "-");
                 docText = docText.Replace("{{individual_clients_year_t}}", "-");
                 docText = docText.Replace("{{new_clients_t}}", "-");
-                docText = docText.Replace("{{clients_in_db_t}}", "-");
+                docText = docText.Replace("{{wage_percent_t}}", "-");
+                docText = docText.Replace("{{retail_percent_t}}", "-");
+                docText = docText.Replace("{{average_bill_t}}", "-");
+                docText = docText.Replace("{{total_year_takings_t}}", "-");
+                docText = docText.Replace("{{avg_client_visits_t}}", "-");
+                docText = docText.Replace("{{wks_between_apts_t}}", "-");
             }
 
             // Result
             if (target != null)
             {
-                docText = docText.Replace("{{tot_takings_r}}", $"{Math.Round(actual.TotalTakings / target.TotalTakings * 100, 2)}%");
-                docText = docText.Replace("{{retail_r}}", $"{Math.Round(actual.RetailMonth / target.RetailMonth * 100, 2)}%");
-                docText = docText.Replace("{{wage_bill_r}}", $"{Math.Round(actual.WageBillMonth / target.WageBillMonth * 100, 2)}%");
-                docText = docText.Replace("{{client_visits_r}}", $"{Math.Round(actual.NewClientsMonth / target.NewClientsMonth * 100, 2)}%");
-                docText = docText.Replace("{{rebooks_r}}", $"{Math.Round(actual.RebooksMonth / target.RebooksMonth * 100, 2)}%");
-                docText = docText.Replace("{{client_visits_year_r}}", $"{Math.Round(actual.ClientVisitsLastYear / target.ClientVisitsLastYear * 100, 2)}%");
-                docText = docText.Replace("{{individual_clients_year_r}}", $"{Math.Round(actual.IndividualClientVisitsLastYear / target.IndividualClientVisitsLastYear * 100, 2)}%");
-                docText = docText.Replace("{{new_clients_r}}", $"{Math.Round(actual.NewClientsMonth / target.NewClientsMonth * 100, 2)}%");
-                docText = docText.Replace("{{clients_in_db_r}}", $"{Math.Round(actual.TotalClientsInDatabase / target.TotalClientsInDatabase * 100, 2)}%");
+                docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{tot_takings_r}}</w:t>", $"{GetGrowthString(actual.TotalTakings, target.TotalTakings)}");
+                docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{retail_r}}</w:t>", $"{GetGrowthString(actual.RetailMonth, target.RetailMonth)}");
+                docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{wage_bill_r}}</w:t>", $"{GetGrowthString(actual.WageBillMonth, target.WageBillMonth)}");
+                docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{client_visits_r}}</w:t>", $"{GetGrowthString(actual.ClientVisitsMonth, target.ClientVisitsMonth)}");
+                docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{rebooks_r}}</w:t>", $"{GetGrowthString(actual.RebooksMonth, target.RebooksMonth)}");
+                docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{client_visits_year_r}}</w:t>", $"{GetGrowthString(actual.ClientVisitsLastYear, target.ClientVisitsLastYear)}");
+                docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{individual_clients_year_r}}</w:t>", $"{GetGrowthString(actual.IndividualClientVisitsLastYear, target.IndividualClientVisitsLastYear)}");
+                docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{new_clients_r}}</w:t>", $"{GetGrowthString(actual.NewClientsMonth, target.NewClientsMonth)}");
+                docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{wage_percent_r}}</w:t>", $"{GetGrowthString(actual.WagePercent, target.WagePercent)}");
+                docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{retail_percent_r}}</w:t>", $"{GetGrowthString(actual.RetailPercent, target.RetailPercent)}");
+                docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{average_bill_r}}</w:t>", $"{GetGrowthString(actual.AverageBill, target.AverageBill)}");
+                docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{total_year_takings_r}}</w:t>", $"{GetGrowthString(actual.TotalTakingsYear, target.TotalYearTarget)}");
+                docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{avg_client_visits_r}}</w:t>", $"{GetGrowthString(actual.AverageClientVisitsYear, target.AverageClientVisitsYear)}");
+                docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{wks_between_apts_r}}</w:t>", $"{GetGrowthString(actual.WeeksBetweenAppointments, target.WeeksBetweenAppointments)}");
             }
             else
             {
@@ -232,7 +252,12 @@ namespace isaloncoach10.Controllers
                 docText = docText.Replace("{{client_visits_year_r}}", "-");
                 docText = docText.Replace("{{individual_clients_year_r}}", "-");
                 docText = docText.Replace("{{new_clients_r}}", "-");
-                docText = docText.Replace("{{clients_in_db_r}}", "-");
+                docText = docText.Replace("{{wage_percent_r}}", "-");
+                docText = docText.Replace("{{retail_percent_r}}", "-");
+                docText = docText.Replace("{{average_bill_r}}", "-");
+                docText = docText.Replace("{{total_year_takings_r}}", "-");
+                docText = docText.Replace("{{avg_client_visits_r}}", "-");
+                docText = docText.Replace("{{wks_between_apts_r}}", "-");
             }
 
             System.IO.File.Copy(path, nPath, false);
@@ -280,6 +305,20 @@ namespace isaloncoach10.Controllers
                     return Content(docText);
                 }
             };
+        }
+
+        private string GetGrowthString(double actual, double target)
+        {
+            string output = $"<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{tot_takings_r}}</w:t>";
+            double calculation_result = Math.Round(((actual - target) / target) * 100, 2);
+            if (calculation_result > 1)
+            {
+                return $"<w:rPr><w:color w:val=\"00FF00\"/></w:rPr><w:t>{calculation_result}%</w:t>";
+            }
+            else
+            {
+                return $"<w:rPr><w:color w:val=\"FF0000\"/></w:rPr><w:t>{calculation_result}%</w:t>";
+            }
         }
     }
 }

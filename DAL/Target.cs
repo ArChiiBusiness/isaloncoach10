@@ -18,7 +18,6 @@ namespace DAL
         public double ClientVisitsLastYear { get; set; }
         public double IndividualClientVisitsLastYear { get; set; }
         public double NewClientsMonth { get; set; }
-        public double TotalClientsInDatabase { get; set; }
         public double WagePercent { get; set; }
         public double RetailPercent { get; set; }
         public double AverageBill { get; set; }

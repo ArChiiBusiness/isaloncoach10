@@ -21,7 +21,6 @@ namespace DAL
         public double ClientVisitsLastYear { get; set; }
         public double IndividualClientVisitsLastYear { get; set; }
         public double NewClientsMonth { get; set; }
-        public double TotalClientsInDatabase { get; set; }
 
         public Guid SalonId { get; set; }
         public Salon Salon { get; set; }

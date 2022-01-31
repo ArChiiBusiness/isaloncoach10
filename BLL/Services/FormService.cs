@@ -36,8 +36,7 @@ namespace BLL.Services
                     Timestamp = DateTime.Now,
                     ClientVisitsMonth = data.ClientVisitsMonth,
                     RebooksMonth = data.RebooksMonth,
-                    NewClientsMonth = data.NewClientsMonth,
-                    TotalClientsInDatabase = data.TotalClientsInDatabase
+                    NewClientsMonth = data.NewClientsMonth
                 }).FirstOrDefaultAsync();
         }
 
@@ -49,8 +48,7 @@ namespace BLL.Services
                 Timestamp = DateTime.Now,
                 ClientVisitsMonth = data.ClientVisitsMonth,
                 RebooksMonth = data.RebooksMonth,
-                NewClientsMonth = data.NewClientsMonth,
-                TotalClientsInDatabase = data.TotalClientsInDatabase
+                NewClientsMonth = data.NewClientsMonth
             }).ToListAsync();
         }
 
@@ -90,7 +88,6 @@ namespace BLL.Services
                 RebooksMonth = data.RebooksMonth,
                 RetailMonth = data.RetailMonth,
                 SalonId = salonId,
-                TotalClientsInDatabase = data.TotalClientsInDatabase,
                 TotalTakings = data.TotalTakings,
                 WageBillMonth = data.WageBillMonth
             };

@@ -62,6 +62,7 @@ namespace BLL.Services
             return await _db.Salon.Where(s => s.Name == salonName)
                 .Select(s => s.SalonId).FirstOrDefaultAsync();
         }
+
         public async Task<string> GetSalonNameById(Guid salonId)
         {
             return await _db.Salon.Where(s => s.SalonId == salonId)
@@ -93,6 +94,7 @@ namespace BLL.Services
                      Email = s.Email
                  }).FirstOrDefaultAsync();
         }
+
         public async Task<bool> UpdateSalon(SalonBOL salon)
         {
             Salon salonDAL = await _db.Salon.Where(s => s.SalonId == salon.Id).FirstOrDefaultAsync();
@@ -121,7 +123,6 @@ namespace BLL.Services
                 RebooksMonth = actual.RebooksMonth,
                 RetailMonth = actual.RetailMonth,
                 SalonId = salonId,
-                TotalClientsInDatabase = actual.TotalClientsInDatabase,
                 TotalTakings = actual.TotalTakings,
                 WageBillMonth = actual.WageBillMonth,
                 AverageBill = actual.AverageBill
@@ -151,14 +152,17 @@ namespace BLL.Services
                     RetailMonth = actual.RetailMonth,
                     SalonName = actual.Salon.Name,
                     Timestamp = actual.Timestamp,
-                    TotalClientsInDatabase = actual.TotalClientsInDatabase,
                     TotalTakings = actual.TotalTakings,
                     WageBillMonth = actual.WageBillMonth,
                     Year = actual.Year,
                     WagePercent = Math.Round((actual.WageBillMonth / actual.TotalTakings) * 100, 2),
                     RetailPercent = Math.Round((actual.RetailMonth / actual.TotalTakings) * 100, 2),
                     AverageBill = actual.AverageBill,
-                    TotalTakingsYear = 0,
+                    TotalTakingsYear = Math.Round(_db.Actual
+                    .Where(a => a.Year == actual.Year && a.Month <= actual.Month)
+                    .Select(a => a.TotalTakings).Sum() + _db.Target
+                    .Where(t => t.SalonId == actual.SalonId && t.Year == actual.Year)
+                    .Select(t => t.TotalYearTarget).FirstOrDefault() / 12 * (12 - actual.Month), 2),
                     AverageClientVisitsYear = Math.Round(actual.ClientVisitsLastYear / actual.IndividualClientVisitsLastYear, 2),
                     WeeksBetweenAppointments = Math.Round(52 / (Math.Round(actual.ClientVisitsLastYear / actual.IndividualClientVisitsLastYear, 2)), 2)
                 }).ToListAsync();
@@ -182,14 +186,17 @@ namespace BLL.Services
                     RetailMonth = actual.RetailMonth,
                     SalonName = actual.Salon.Name,
                     Timestamp = actual.Timestamp,
-                    TotalClientsInDatabase = actual.TotalClientsInDatabase,
                     TotalTakings = actual.TotalTakings,
                     WageBillMonth = actual.WageBillMonth,
                     Year = actual.Year,
                     WagePercent = Math.Round((actual.WageBillMonth / actual.TotalTakings) * 100, 2),
                     RetailPercent = Math.Round((actual.RetailMonth / actual.TotalTakings) * 100, 2),
                     AverageBill = actual.AverageBill,
-                    TotalTakingsYear = _db.Actual.Where(a => a.Year == actual.Year).Select(a => a.TotalTakings).Sum(),
+                    TotalTakingsYear = Math.Round(_db.Actual
+                    .Where(a => a.Year == actual.Year && a.Month <= actual.Month)
+                    .Select(a => a.TotalTakings).Sum() + _db.Target
+                    .Where(t=>t.SalonId == actual.SalonId && t.Year == actual.Year)
+                    .Select(t=>t.TotalYearTarget).FirstOrDefault()/12*(12-actual.Month),2),
                     AverageClientVisitsYear = Math.Round(actual.ClientVisitsLastYear / actual.IndividualClientVisitsLastYear, 2),
                     WeeksBetweenAppointments = Math.Round(52 / (Math.Round(actual.ClientVisitsLastYear / actual.IndividualClientVisitsLastYear, 2)), 2)
                 }).FirstOrDefaultAsync();
@@ -222,14 +229,17 @@ namespace BLL.Services
                     RetailMonth = actual.RetailMonth,
                     SalonName = actual.Salon.Name,
                     Timestamp = actual.Timestamp,
-                    TotalClientsInDatabase = actual.TotalClientsInDatabase,
                     TotalTakings = actual.TotalTakings,
                     WageBillMonth = actual.WageBillMonth,
                     Year = actual.Year,
                     WagePercent = Math.Round((actual.WageBillMonth / actual.TotalTakings) * 100, 2),
                     RetailPercent = Math.Round((actual.RetailMonth / actual.TotalTakings) * 100, 2),
                     AverageBill = actual.AverageBill,
-                    TotalTakingsYear = _db.Actual.Where(a => a.Year == actual.Year).Select(a => a.TotalTakings).Sum(),
+                    TotalTakingsYear = Math.Round(_db.Actual
+                    .Where(a => a.Year == actual.Year && a.Month <= actual.Month)
+                    .Select(a => a.TotalTakings).Sum() + _db.Target
+                    .Where(t => t.SalonId == actual.SalonId && t.Year == actual.Year)
+                    .Select(t => t.TotalYearTarget).FirstOrDefault() / 12 * (12 - actual.Month), 2),
                     AverageClientVisitsYear = Math.Round(actual.ClientVisitsLastYear / actual.IndividualClientVisitsLastYear, 2),
                     WeeksBetweenAppointments = Math.Round(52 / (Math.Round(actual.ClientVisitsLastYear / actual.IndividualClientVisitsLastYear, 2)), 2)
                 }).FirstOrDefaultAsync();
@@ -259,7 +269,6 @@ namespace BLL.Services
                 RetailMonth = target.RetailMonth,
                 SalonId = salonId,
                 TargetId = target.Id,
-                TotalClientsInDatabase = target.TotalClientsInDatabase,
                 TotalTakings = target.TotalTakings,
                 WageBillMonth = target.WageBillMonth,
                 Year = target.Year,
@@ -290,7 +299,6 @@ namespace BLL.Services
                     RebooksMonth = target.RebooksMonth,
                     RetailMonth = target.RetailMonth,
                     SalonName = target.Salon.Name,
-                    TotalClientsInDatabase = target.TotalClientsInDatabase,
                     TotalTakings = target.TotalTakings,
                     WageBillMonth = target.WageBillMonth,
                     Year = target.Year,
@@ -317,7 +325,6 @@ namespace BLL.Services
                     RebooksMonth = target.RebooksMonth,
                     RetailMonth = target.RetailMonth,
                     SalonName = target.Salon.Name,
-                    TotalClientsInDatabase = target.TotalClientsInDatabase,
                     TotalTakings = target.TotalTakings,
                     WageBillMonth = target.WageBillMonth,
                     Year = target.Year,
@@ -360,7 +367,6 @@ namespace BLL.Services
                         RebooksMonth = target.RebooksMonth,
                         RetailMonth = target.RetailMonth,
                         SalonName = target.Salon.Name,
-                        TotalClientsInDatabase = target.TotalClientsInDatabase,
                         TotalTakings = target.TotalTakings,
                         WageBillMonth = target.WageBillMonth,
                         Year = target.Year,
@@ -383,7 +389,6 @@ namespace BLL.Services
             targetDAL.Year = target.Year;
             targetDAL.WageBillMonth = target.WageBillMonth;
             targetDAL.TotalTakings = target.TotalTakings;
-            targetDAL.TotalClientsInDatabase = target.TotalClientsInDatabase;
             targetDAL.RetailMonth = target.RetailMonth;
             targetDAL.RebooksMonth = target.RebooksMonth;
             targetDAL.NewClientsMonth = target.NewClientsMonth;
