@@ -12,9 +12,11 @@ using Syncfusion.DocIO.DLS;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace isaloncoach10.Controllers
 {
+    [Authorize]
     public class ResponseController : Controller
     {
         IFormService _formService;

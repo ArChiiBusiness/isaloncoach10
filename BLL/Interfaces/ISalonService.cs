@@ -25,6 +25,7 @@ namespace BLL.Interfaces
         Task<ActualBOL> GetActualByMonthYear(Guid salonId,int Year, int Month);
         Task<List<ActualBOL>> GetActuals(Guid salonId);
         Task<bool> DeleteActual(Guid actualId);
+        Task<List<ActualBOL>> GetAllActuals();
 
         // Targets
         Task<Guid> AddTargetData(TargetBOL target, Guid salonId);

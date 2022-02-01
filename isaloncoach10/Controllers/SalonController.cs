@@ -10,9 +10,11 @@ using System.Threading.Tasks;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace isaloncoach10.Controllers
 {
+    [Authorize]
     public class SalonController : Controller
     {
         private ISalonService _salonService;
