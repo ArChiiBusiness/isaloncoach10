@@ -105,7 +105,6 @@ namespace isaloncoach10.Controllers
             docText = docText.Replace("{{wage_perc_r}}", "0");
 
             docText = docText.Replace("{{clients_in_db_t}}", "0");
-            docText = docText.Replace("{{clients_in_db_a}}", data.TotalClientsInDatabase.ToString());
             docText = docText.Replace("{{clients_in_db_r}}", "0");
 
             docText = docText.Replace("{{avg_client_visits_year_t}}", "0");

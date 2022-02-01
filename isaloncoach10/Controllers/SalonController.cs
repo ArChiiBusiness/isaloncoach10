@@ -237,7 +237,7 @@ namespace isaloncoach10.Controllers
                 docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{client_visits_year_r}}</w:t>", $"{GetGrowthString(actual.ClientVisitsLastYear, target.ClientVisitsLastYear)}");
                 docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{individual_clients_year_r}}</w:t>", $"{GetGrowthString(actual.IndividualClientVisitsLastYear, target.IndividualClientVisitsLastYear)}");
                 docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{new_clients_r}}</w:t>", $"{GetGrowthString(actual.NewClientsMonth, target.NewClientsMonth)}");
-                docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{wage_percent_r}}</w:t>", $"{GetGrowthString(actual.WagePercent, target.WagePercent)}");
+                docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{wage_percent_r}}</w:t>", $"{GetGrowthString(actual.WagePercent, target.WagePercent, true)}");
                 docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{retail_percent_r}}</w:t>", $"{GetGrowthString(actual.RetailPercent, target.RetailPercent)}");
                 docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{average_bill_r}}</w:t>", $"{GetGrowthString(actual.AverageBill, target.AverageBill)}");
                 docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{total_year_takings_r}}</w:t>", $"{GetGrowthString(actual.TotalTakingsYear, target.TotalYearTarget)}");
@@ -309,17 +309,33 @@ namespace isaloncoach10.Controllers
             };
         }
 
-        private string GetGrowthString(double actual, double target)
+        private string GetGrowthString(double actual, double target, bool isOpposite = false)
         {
+            string greenColorCode = "219F94";
             string output = $"<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{tot_takings_r}}</w:t>";
             double calculation_result = Math.Round(((actual - target) / target) * 100, 2);
+
             if (calculation_result > 1)
             {
-                return $"<w:rPr><w:color w:val=\"00FF00\"/></w:rPr><w:t>{calculation_result}%</w:t>";
+                if (isOpposite)
+                {
+                    return $"<w:rPr><w:color w:val=\"FF0000\"/></w:rPr><w:t>{calculation_result}%</w:t>";
+                }
+                else
+                {
+                    return $"<w:rPr><w:color w:val=\"{greenColorCode}\"/></w:rPr><w:t>{calculation_result}%</w:t>";
+                }
             }
             else
             {
-                return $"<w:rPr><w:color w:val=\"FF0000\"/></w:rPr><w:t>{calculation_result}%</w:t>";
+                if (isOpposite)
+                {
+                    return $"<w:rPr><w:color w:val=\"{greenColorCode}\"/></w:rPr><w:t>{calculation_result}%</w:t>";
+                }
+                else
+                {
+                    return $"<w:rPr><w:color w:val=\"FF0000\"/></w:rPr><w:t>{calculation_result}%</w:t>";
+                }
             }
         }
     }
