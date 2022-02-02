@@ -29,6 +29,14 @@ namespace isaloncoach10.Controllers.Api
             {
                 return Unauthorized();
             }
+            try
+            {
+                var actuals = await _salonService.GetAllActuals();
+            }
+            catch (Exception e)
+            {
+                return Ok(e.Message);
+            }
             return new JsonResult(await _salonService.GetAllActuals());
         }
     }
