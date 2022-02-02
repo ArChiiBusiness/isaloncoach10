@@ -231,7 +231,7 @@ namespace isaloncoach10.Controllers
             {
                 docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{tot_takings_r}}</w:t>", $"{GetGrowthString(actual.TotalTakings, target.TotalTakings)}");
                 docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{retail_r}}</w:t>", $"{GetGrowthString(actual.RetailMonth, target.RetailMonth)}");
-                docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{wage_bill_r}}</w:t>", $"{GetGrowthString(actual.WageBillMonth, target.WageBillMonth)}");
+                docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{wage_bill_r}}</w:t>", $"{GetGrowthString(actual.WageBillMonth, target.WageBillMonth, true)}");
                 docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{client_visits_r}}</w:t>", $"{GetGrowthString(actual.ClientVisitsMonth, target.ClientVisitsMonth)}");
                 docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{rebooks_r}}</w:t>", $"{GetGrowthString(actual.RebooksMonth, target.RebooksMonth)}");
                 docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{client_visits_year_r}}</w:t>", $"{GetGrowthString(actual.ClientVisitsLastYear, target.ClientVisitsLastYear)}");
@@ -241,8 +241,8 @@ namespace isaloncoach10.Controllers
                 docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{retail_percent_r}}</w:t>", $"{GetGrowthString(actual.RetailPercent, target.RetailPercent)}");
                 docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{average_bill_r}}</w:t>", $"{GetGrowthString(actual.AverageBill, target.AverageBill)}");
                 docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{total_year_takings_r}}</w:t>", $"{GetGrowthString(actual.TotalTakingsYear, target.TotalYearTarget)}");
-                docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{avg_client_visits_r}}</w:t>", $"{GetGrowthString(actual.AverageClientVisitsYear, target.AverageClientVisitsYear)}");
-                docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{wks_between_apts_r}}</w:t>", $"{GetGrowthString(actual.WeeksBetweenAppointments, target.WeeksBetweenAppointments)}");
+                docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{avg_client_visits_r}}</w:t>", $"{GetGrowthString(actual.AverageClientVisitsYear, target.AverageClientVisitsYear, true)}");
+                docText = docText.Replace("<w:rPr><w:color w:val=\"323232\"/></w:rPr><w:t>{{wks_between_apts_r}}</w:t>", $"{GetGrowthString(actual.WeeksBetweenAppointments, target.WeeksBetweenAppointments, true)}");
             }
             else
             {

@@ -158,11 +158,9 @@ namespace BLL.Services
                     WagePercent = (actual.TotalTakings != 0) ? Math.Round((actual.WageBillMonth / actual.TotalTakings) * 100, 2) : 0,
                     RetailPercent = (actual.TotalTakings != 0) ? Math.Round((actual.RetailMonth / actual.TotalTakings) * 100, 2) : 0,
                     AverageBill = actual.AverageBill,
-                    TotalTakingsYear = Math.Round(_db.Actual
-                    .Where(a => a.Year == actual.Year && a.Month <= actual.Month)
-                    .Select(a => a.TotalTakings).Sum() + _db.Target
-                    .Where(t => t.SalonId == actual.SalonId && t.Year == actual.Year)
-                    .Select(t => t.TotalYearTarget).FirstOrDefault() / 12 * (12 - actual.Month), 2),
+                    TotalTakingsYear = Math.Round((_db.Target.Where(t => t.SalonId == actual.SalonId && t.Year == actual.Year)
+                    .Select(t => t.TotalYearTarget).FirstOrDefault() / 12 * (12 - actual.Month)) +
+                    _db.Actual.Where(a => a.Year == actual.Year && a.Month <= actual.Month && a.SalonId == actual.SalonId).Select(a => a.TotalTakings).Sum(), 2),
                     AverageClientVisitsYear = (actual.IndividualClientVisitsLastYear != 0) ? Math.Round(actual.ClientVisitsLastYear / actual.IndividualClientVisitsLastYear, 2) : 0,
                     WeeksBetweenAppointments = (actual.IndividualClientVisitsLastYear != 0) ? Math.Round(52 / (Math.Round(actual.ClientVisitsLastYear / actual.IndividualClientVisitsLastYear, 2)), 2) : 0
                 }).ToListAsync();
@@ -192,11 +190,9 @@ namespace BLL.Services
                     WagePercent = (actual.TotalTakings != 0) ? Math.Round((actual.WageBillMonth / actual.TotalTakings) * 100, 2) : 0,
                     RetailPercent = (actual.TotalTakings != 0) ? Math.Round((actual.RetailMonth / actual.TotalTakings) * 100, 2) : 0,
                     AverageBill = actual.AverageBill,
-                    TotalTakingsYear = Math.Round(_db.Actual
-                    .Where(a => a.Year == actual.Year && a.Month <= actual.Month)
-                    .Select(a => a.TotalTakings).Sum() + _db.Target
-                    .Where(t => t.SalonId == actual.SalonId && t.Year == actual.Year)
-                    .Select(t => t.TotalYearTarget).FirstOrDefault() / 12 * (12 - actual.Month), 2),
+                    TotalTakingsYear = Math.Round((_db.Target.Where(t => t.SalonId == actual.SalonId && t.Year == actual.Year)
+                    .Select(t => t.TotalYearTarget).FirstOrDefault() / 12 * (12 - actual.Month)) +
+                    _db.Actual.Where(a => a.Year == actual.Year && a.Month <= actual.Month && a.SalonId == actual.SalonId).Select(a => a.TotalTakings).Sum(), 2),
                     AverageClientVisitsYear = (actual.IndividualClientVisitsLastYear != 0) ? Math.Round(actual.ClientVisitsLastYear / actual.IndividualClientVisitsLastYear, 2) : 0,
                     WeeksBetweenAppointments = (actual.IndividualClientVisitsLastYear != 0) ? Math.Round(52 / (Math.Round(actual.ClientVisitsLastYear / actual.IndividualClientVisitsLastYear, 2)), 2) : 0
                 }).FirstOrDefaultAsync();
@@ -235,11 +231,9 @@ namespace BLL.Services
                     WagePercent = (actual.TotalTakings != 0) ? Math.Round((actual.WageBillMonth / actual.TotalTakings) * 100, 2) : 0,
                     RetailPercent = (actual.TotalTakings != 0) ? Math.Round((actual.RetailMonth / actual.TotalTakings) * 100, 2) : 0,
                     AverageBill = actual.AverageBill,
-                    TotalTakingsYear = Math.Round(_db.Actual
-                    .Where(a => a.Year == actual.Year && a.Month <= actual.Month)
-                    .Select(a => a.TotalTakings).Sum() + _db.Target
-                    .Where(t => t.SalonId == actual.SalonId && t.Year == actual.Year)
-                    .Select(t => t.TotalYearTarget).FirstOrDefault() / 12 * (12 - actual.Month), 2),
+                    TotalTakingsYear = Math.Round((_db.Target.Where(t => t.SalonId == actual.SalonId && t.Year == actual.Year)
+                    .Select(t => t.TotalYearTarget).FirstOrDefault() / 12 * (12 - actual.Month)) +
+                    _db.Actual.Where(a => a.Year == actual.Year && a.Month <= actual.Month && a.SalonId == actual.SalonId).Select(a => a.TotalTakings).Sum(), 2),
                     AverageClientVisitsYear = (actual.IndividualClientVisitsLastYear != 0) ? Math.Round(actual.ClientVisitsLastYear / actual.IndividualClientVisitsLastYear, 2) : 0,
                     WeeksBetweenAppointments = (actual.IndividualClientVisitsLastYear != 0) ? Math.Round(52 / (Math.Round(actual.ClientVisitsLastYear / actual.IndividualClientVisitsLastYear, 2)), 2) : 0
                 }).FirstOrDefaultAsync();
@@ -278,11 +272,9 @@ namespace BLL.Services
                     WagePercent = (actual.TotalTakings != 0) ? Math.Round((actual.WageBillMonth / actual.TotalTakings) * 100, 2) : 0,
                     RetailPercent = (actual.TotalTakings != 0) ? Math.Round((actual.RetailMonth / actual.TotalTakings) * 100, 2) : 0,
                     AverageBill = actual.AverageBill,
-                    TotalTakingsYear = Math.Round(_db.Actual
-                    .Where(a => a.Year == actual.Year && a.Month <= actual.Month)
-                    .Select(a => a.TotalTakings).Sum() + _db.Target
-                    .Where(t => t.SalonId == actual.SalonId && t.Year == actual.Year)
-                    .Select(t => t.TotalYearTarget).FirstOrDefault() /  12 * (12 - actual.Month), 2),
+                    TotalTakingsYear = Math.Round((_db.Target.Where(t => t.SalonId == actual.SalonId && t.Year == actual.Year)
+                    .Select(t => t.TotalYearTarget).FirstOrDefault() / 12 * (12 - actual.Month)) +
+                    _db.Actual.Where(a => a.Year == actual.Year && a.Month <= actual.Month && a.SalonId == actual.SalonId).Select(a => a.TotalTakings).Sum(), 2),
                     AverageClientVisitsYear = (actual.IndividualClientVisitsLastYear != 0) ? Math.Round(actual.ClientVisitsLastYear / actual.IndividualClientVisitsLastYear, 2) : 0,
                     WeeksBetweenAppointments = (actual.IndividualClientVisitsLastYear != 0) ? Math.Round(52 / (Math.Round(actual.ClientVisitsLastYear / actual.IndividualClientVisitsLastYear, 2)), 2) : 0
                 }).ToListAsync();
