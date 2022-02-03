@@ -8,7 +8,7 @@
         <div class="card-style mb-30">
             <a class="btn btn-primary mb-2 mt-2" href="salon/add">Add Salon</a>
             <div class="table-wrapper table-responsive">
-                <table class="table">
+                <table id="salon-list" class="table">
                     <thead>
                         <tr>
                             <th>Contact Name</th>
@@ -71,3 +71,11 @@
         </div>
     </div>
 </div>
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#salon-list').DataTable();
+        });
+    </script>
+}
