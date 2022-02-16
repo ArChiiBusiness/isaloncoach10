@@ -27,7 +27,13 @@ namespace BLL.Services
                      Id = s.SalonId,
                      Name = s.Name,
                      ContactName = s.ContactName,
-                     Email = s.Email
+                     Email = s.Email,
+                     LastActualMonthYear = _db.Actual
+                      .Where(a => a.SalonId == s.SalonId)
+                      .OrderByDescending(o => o.Year)
+                      .ThenByDescending(o => o.Month)
+                      .Select(a => a.Month + "/" + a.Year)
+                      .FirstOrDefault(),
                  }).ToListAsync();
         }
 
@@ -53,7 +59,13 @@ namespace BLL.Services
                     Id = s.SalonId,
                     Name = s.Name,
                     ContactName = s.ContactName,
-                    Email = s.Email
+                    Email = s.Email,
+                    LastActualMonthYear = _db.Actual
+                      .Where(a => a.SalonId == s.SalonId)
+                      .OrderByDescending(o => o.Year)
+                      .ThenByDescending(o => o.Month)
+                      .Select(a => a.Month + "/" + a.Year)
+                      .FirstOrDefault(),
                 }).FirstOrDefaultAsync();
         }
 
@@ -91,7 +103,13 @@ namespace BLL.Services
                      Id = s.SalonId,
                      Name = s.Name,
                      ContactName = s.ContactName,
-                     Email = s.Email
+                     Email = s.Email,
+                     LastActualMonthYear = _db.Actual
+                      .Where(a => a.SalonId == s.SalonId)
+                      .OrderByDescending(o => o.Year)
+                      .ThenByDescending(o => o.Month)
+                      .Select(a => a.Month + "/" + a.Year)
+                      .FirstOrDefault(),
                  }).FirstOrDefaultAsync();
         }
 
@@ -162,7 +180,7 @@ namespace BLL.Services
                     .Select(t => t.TotalYearTarget).FirstOrDefault() / 12 * (12 - actual.Month)) +
                     _db.Actual.Where(a => a.Year == actual.Year && a.Month <= actual.Month && a.SalonId == actual.SalonId).Select(a => a.TotalTakings).Sum(), 2),
                     AverageClientVisitsYear = (actual.IndividualClientVisitsLastYear != 0) ? Math.Round(actual.ClientVisitsLastYear / actual.IndividualClientVisitsLastYear, 2) : 0,
-                    WeeksBetweenAppointments = (actual.IndividualClientVisitsLastYear != 0) ? Math.Round(52 / (Math.Round(actual.ClientVisitsLastYear / actual.IndividualClientVisitsLastYear, 2)), 2) : 0
+                    WeeksBetweenAppointments = (actual.IndividualClientVisitsLastYear != 0 && actual.ClientVisitsLastYear != 0) ? Math.Round(52 / (Math.Round(actual.ClientVisitsLastYear / actual.IndividualClientVisitsLastYear, 2)), 2) : 0
                 }).ToListAsync();
         }
 
@@ -194,7 +212,7 @@ namespace BLL.Services
                     .Select(t => t.TotalYearTarget).FirstOrDefault() / 12 * (12 - actual.Month)) +
                     _db.Actual.Where(a => a.Year == actual.Year && a.Month <= actual.Month && a.SalonId == actual.SalonId).Select(a => a.TotalTakings).Sum(), 2),
                     AverageClientVisitsYear = (actual.IndividualClientVisitsLastYear != 0) ? Math.Round(actual.ClientVisitsLastYear / actual.IndividualClientVisitsLastYear, 2) : 0,
-                    WeeksBetweenAppointments = (actual.IndividualClientVisitsLastYear != 0) ? Math.Round(52 / (Math.Round(actual.ClientVisitsLastYear / actual.IndividualClientVisitsLastYear, 2)), 2) : 0
+                    WeeksBetweenAppointments = (actual.IndividualClientVisitsLastYear != 0 && actual.ClientVisitsLastYear != 0) ? Math.Round(52 / (Math.Round(actual.ClientVisitsLastYear / actual.IndividualClientVisitsLastYear, 2)), 2) : 0
                 }).FirstOrDefaultAsync();
         }
 
@@ -235,7 +253,7 @@ namespace BLL.Services
                     .Select(t => t.TotalYearTarget).FirstOrDefault() / 12 * (12 - actual.Month)) +
                     _db.Actual.Where(a => a.Year == actual.Year && a.Month <= actual.Month && a.SalonId == actual.SalonId).Select(a => a.TotalTakings).Sum(), 2),
                     AverageClientVisitsYear = (actual.IndividualClientVisitsLastYear != 0) ? Math.Round(actual.ClientVisitsLastYear / actual.IndividualClientVisitsLastYear, 2) : 0,
-                    WeeksBetweenAppointments = (actual.IndividualClientVisitsLastYear != 0) ? Math.Round(52 / (Math.Round(actual.ClientVisitsLastYear / actual.IndividualClientVisitsLastYear, 2)), 2) : 0
+                    WeeksBetweenAppointments = (actual.IndividualClientVisitsLastYear != 0 && actual.ClientVisitsLastYear != 0) ? Math.Round(52 / (Math.Round(actual.ClientVisitsLastYear / actual.IndividualClientVisitsLastYear, 2)), 2) : 0
                 }).FirstOrDefaultAsync();
             }
 
@@ -276,7 +294,7 @@ namespace BLL.Services
                     .Select(t => t.TotalYearTarget).FirstOrDefault() / 12 * (12 - actual.Month)) +
                     _db.Actual.Where(a => a.Year == actual.Year && a.Month <= actual.Month && a.SalonId == actual.SalonId).Select(a => a.TotalTakings).Sum(), 2),
                     AverageClientVisitsYear = (actual.IndividualClientVisitsLastYear != 0) ? Math.Round(actual.ClientVisitsLastYear / actual.IndividualClientVisitsLastYear, 2) : 0,
-                    WeeksBetweenAppointments = (actual.IndividualClientVisitsLastYear != 0) ? Math.Round(52 / (Math.Round(actual.ClientVisitsLastYear / actual.IndividualClientVisitsLastYear, 2)), 2) : 0
+                    WeeksBetweenAppointments = (actual.IndividualClientVisitsLastYear != 0 && actual.ClientVisitsLastYear != 0) ? Math.Round(52 / (Math.Round(actual.ClientVisitsLastYear / actual.IndividualClientVisitsLastYear, 2)), 2) : 0
                 }).ToListAsync();
         }
 

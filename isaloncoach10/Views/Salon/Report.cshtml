@@ -1,0 +1,133 @@
+﻿@{
+    ViewData["Title"] = "Salons Report";
+    string year = ViewData["year"].ToString();
+    string month = ViewData["month"].ToString();
+}
+@model List<BOL.SalonBOL>;
+
+<div class="row mb-3">
+    <div class="col-md-6 offset-md-6">
+        <form action="reportsubmit" method="post">
+            <div class="row">
+                <div class="col-4">
+                    <input class="form-control" type="number" name="year" min="2000" value="@year" />
+                </div>
+                <div class="col-4">
+                    <input class="form-control" type="number" name="month" min="1" max="12" value="@month" />
+                </div>
+                <div class="col-4">
+                    <input type="submit" value="Filter" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col-lg-12">
+        <div class="card-style mb-30">
+            <h2>Submitted (@Model.Where(m => m.LastActualMonthYear == month + "/" + year).Count())</h2>
+            <div class="table-wrapper table-responsive">
+                <table id="salon-list" class="table">
+                    <thead>
+                        <tr>
+                            <th>Contact Name</th>
+                            <th>Salon Name</th>
+                            <th>Email</th>
+                            <th>Last Actual</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var salon in Model.Where(m => m.LastActualMonthYear == month + "/" + year))
+                        {
+                            <tr>
+                                <td class="min-width">
+                                    <div class="lead">
+                                        <div class="lead-text">
+                                            <p>@salon.ContactName</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="lead">
+                                        <div class="lead-text">
+                                            <p>@salon.Name</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="lead">
+                                        <div class="lead-text">
+                                            <p>@salon.Email</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="lead">
+                                        <div class="lead-text">
+                                            <p>@salon.LastActualMonthYear</p>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-lg-12">
+        <div class="card-style mb-30">
+            <h2>Not Submitted (@Model.Where(m => m.LastActualMonthYear != month + "/" + year).Count())</h2>
+            <div class="table-wrapper table-responsive">
+                <table id="salon-list" class="table">
+                    <thead>
+                        <tr>
+                            <th>Contact Name</th>
+                            <th>Salon Name</th>
+                            <th>Email</th>
+                            <th>Last Actual</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var salon in Model.Where(m => m.LastActualMonthYear != month + "/" + year))
+                        {
+                            <tr>
+                                <td class="min-width">
+                                    <div class="lead">
+                                        <div class="lead-text">
+                                            <p>@salon.ContactName</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="lead">
+                                        <div class="lead-text">
+                                            <p>@salon.Name</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="lead">
+                                        <div class="lead-text">
+                                            <p>@salon.Email</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="lead">
+                                        <div class="lead-text">
+                                            <p>@salon.LastActualMonthYear</p>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -68,6 +68,25 @@ namespace isaloncoach10.Controllers
             return RedirectToAction("index");
         }
 
+        [HttpGet]
+        [Route("/salon/report/{year}/{month}")]
+        public async Task<IActionResult> Report([FromRoute] string year, [FromRoute] string month)
+        {
+            ViewData["year"] = year;
+            ViewData["month"] = month;
+            return View((await _salonService.GetAll()));
+        }
+
+        [HttpPost]
+        [Route("/salon/report/{year}/{month}")]
+        public async Task<IActionResult> ReportSubmit([FromForm] string year, [FromForm] string month)
+        {
+            ViewData["year"] = year;
+            ViewData["month"] = month;
+            return RedirectToAction("Report", new { year = year, month = month });
+            //return View((await _salonService.GetAll()));
+        }
+
         [Route("/salon/{salonId}/actuals")]
         public async Task<IActionResult> Actuals(Guid salonId)
         {
@@ -169,7 +188,7 @@ namespace isaloncoach10.Controllers
 
             string docText = tmplText;
 
-            docText = docText.Replace("{{salon_name}}", actual.SalonName.ToString());
+            docText = docText.Replace("{{salon_name}}", actual.SalonName.Replace("&", "&#38;").ToString());
             docText = docText.Replace("{{name}}", actual.ContactName.ToString());
             docText = docText.Replace("{{month}}", actual.Month.ToString());
             docText = docText.Replace("{{year}}", actual.Year.ToString());

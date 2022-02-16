@@ -12,5 +12,6 @@ namespace BOL
         public string ContactName { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
+        public string LastActualMonthYear { get; set; }
     }
 }
